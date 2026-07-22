@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTheme } from './hooks/useTheme';
+import { LicenseProvider, useLicense } from './licensing/LicenseProvider';
 import { useScan } from './hooks/useScan';
 import { HomePage } from './pages/HomePage';
 import { ScanPage } from './pages/ScanPage';
@@ -48,8 +49,13 @@ const navItems: NavItem[] = [
 ];
 
 export default function App() {
+  return <LicenseProvider productKey="FolderScope"><AppInner /></LicenseProvider>;
+}
+
+function AppInner() {
   const [page, setPage] = useState<Page>('home');
   const { isDark, toggle: toggleTheme } = useTheme();
+  const { isPro, loading: proLoading, setShowProModal } = useLicense();
   const { scanning, progress, results, error, recentScans, startScan, reset } = useScan();
 
   const handleStartScan = useCallback((path: string) => {
@@ -105,6 +111,20 @@ export default function App() {
           <span style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--color-text)' }}>
             FolderScope
           </span>
+          {!proLoading && (
+            <span style={{
+              fontSize: '0.625rem',
+              fontWeight: 600,
+              padding: '0.125rem 0.375rem',
+              borderRadius: 'var(--radius-sm)',
+              background: isPro ? 'var(--color-success-light)' : 'var(--color-warning-light)',
+              color: isPro ? 'var(--color-success)' : 'var(--color-warning)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}>
+              {isPro ? 'Pro' : 'Free'}
+            </span>
+          )}
         </div>
 
         <nav style={{ flex: 1, padding: '8px' }}>
@@ -150,7 +170,30 @@ export default function App() {
           ))}
         </nav>
 
-        <div style={{ padding: '8px', borderTop: `1px solid var(--color-border)` }}>
+        <div style={{ padding: '8px', borderTop: '1px solid var(--color-border)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          {!isPro && (
+            <button
+              onClick={() => setShowProModal(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                width: '100%',
+                padding: '10px 14px',
+                border: 'none',
+                borderRadius: 'var(--radius-md)',
+                background: 'var(--color-primary)',
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+              }}
+            >
+              <span>⭐</span>
+              Upgrade to Pro
+            </button>
+          )}
           <button
             onClick={toggleTheme}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
