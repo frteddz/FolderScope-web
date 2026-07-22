@@ -79,7 +79,7 @@ function ProModalInner() {
     licenseKey,
     setLicenseKey,
     activateLicense,
-    checkoutUrl,
+    
     activating,
     deactivateLicense,
     isPro,
@@ -164,21 +164,55 @@ function ProModalInner() {
               </p>
             </div>
 
-            <a
-              href={checkoutUrl || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
               style={{
-                display: 'block', width: '100%', padding: '0.75rem',
-                borderRadius: 'var(--radius-md)', border: 'none',
-                background: 'var(--color-primary)', color: '#fff',
-                fontWeight: 600, fontSize: '0.9375rem', cursor: 'pointer',
-                textAlign: 'center', textDecoration: 'none',
-                marginBottom: '1.25rem', transition: 'all var(--transition-normal)',
+                background: 'var(--color-surface-secondary)',
+                borderRadius: 'var(--radius-lg)',
+                padding: '1.25rem',
+                marginBottom: '1.25rem',
+                border: '1px solid var(--color-border)',
               }}
             >
-              Purchase License
-            </a>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+                <span style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-text)' }}>
+                  Pay ${product?.price ?? 3} via Wise
+                </span>
+              </div>
+
+              <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', marginBottom: '0.75rem', lineHeight: 1.5 }}>
+                Send the payment to the email below. Include your email in the reference so I can send you the license key within 24 hours.
+              </p>
+
+              <div
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  background: 'var(--color-background)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '0.625rem 0.75rem',
+                  border: '1px solid var(--color-border)',
+                }}
+              >
+                <span style={{ flex: 1, fontSize: '0.875rem', color: 'var(--color-text)', fontFamily: 'var(--font-mono)' }}>
+                  {LICENSING_CONFIG.wise.email}
+                </span>
+                <button
+                  onClick={() => { navigator.clipboard.writeText(LICENSING_CONFIG.wise.email); }}
+                  style={{
+                    background: 'var(--color-primary)',
+                    color: '#fff', border: 'none',
+                    borderRadius: 'var(--radius-sm)',
+                    padding: '0.375rem 0.75rem',
+                    fontSize: '0.75rem', fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
 
             <div style={{ position: 'relative', marginBottom: '1.25rem' }}>
               <div style={{
@@ -187,7 +221,7 @@ function ProModalInner() {
               }}>
                 <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
                 <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-tertiary)', whiteSpace: 'nowrap' }}>
-                  Already have a license?
+                  Already paid? Enter your key
                 </span>
                 <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
               </div>

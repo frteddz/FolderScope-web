@@ -6,4 +6,8 @@ export const LICENSING_CONFIG = {
   } as Record<string, { productId: number; variantId: number; name: string; price: number }>,
   isDev: import.meta.env.DEV,
   lsApiBase: 'https://api.lemonsqueezy.com/v1',
+  wise: {
+    email: 'teddzfr@proton.me',
+    currency: 'USD',
+  },
 };
