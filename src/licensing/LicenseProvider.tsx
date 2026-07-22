@@ -22,7 +22,7 @@ export function useLicense(): LicenseContextValue {
   return ctx;
 }
 
-const STUDIO_PASS_URL = 'https://frteddz.github.io/Euthenia-Studio-Website/studio-pass';
+const STUDIO_PASS_URL = 'https://frteddz.github.io/Euthenia-Studio-Website/#studio-pass';
 
 export function LicenseProvider({ children }: { children: ReactNode; productKey?: string }) {
   const { isPro, loading } = useStudioPassLicense();
