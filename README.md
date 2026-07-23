@@ -2,6 +2,8 @@
 
 > Disk usage visualizer — see where your storage went with interactive charts.
 
+This repository contains only the built distribution files. The source code is not publicly available.
+
 ## Features
 
 - Scan any folder and visualize its contents by size
